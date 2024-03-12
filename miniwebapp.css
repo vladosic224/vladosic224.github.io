@@ -30,7 +30,7 @@ padding: 10px 20px;
 border: none;
 background: rgb(248, 168, 24);
 border-radius: 10px;
-color: #fff;
+color: #f80000;
 text-transform: uppercase;
 font-weight: 700;
 
@@ -38,7 +38,7 @@ transition: background .2s linear;
 }
 
 .button:hover {
-background: lightgreen;
+background: rgb(22, 245, 22);
 }
 
 .usercard {
