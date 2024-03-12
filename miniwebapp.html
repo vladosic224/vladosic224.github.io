@@ -45,5 +45,26 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="webapp.js"></script>
+    <script>
+        const buttons = document.querySelectorAll('.button');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const city = button.getAttribute('data-city');
+                fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2ed920f2fae3fc09b3a8c000ccde583e`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const weatherDisplay = document.getElementById('weatherDisplay');
+                        weatherDisplay.innerHTML = `В городе ${city} температура: ${data.main.temp}°C, ${data.weather[0].description}`;
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при получении информации о погоде:', error);
+                    });
+            });
+        });
+    </script>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="webapp.js"></script>
 </body>
 </html>
