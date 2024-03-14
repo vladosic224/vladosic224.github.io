@@ -1,4 +1,3 @@
-
 const TelegramBot = require('node-telegram-bot-api');
 const request = require('request');
 
@@ -23,40 +22,35 @@ function sendCityButtons(chatId) {
     };
     bot.sendMessage(chatId, 'Выберите город:', options);
 }
+
+// Обработчик команды /start
+bot.onText(/\/start/, (msg) => {
+    sendCityButtons(msg.chat.id);
+});
+
 // Обработчик нажатия на кнопку с названием города
 bot.on('message', (msg) => {
     const cityName = msg.text;
     const city = cityButtons.find(city => city.text === cityName);
     if (city) {
-        const url = `http://api.openweathermap.org/data/2.5/weather?q=${city.city}&units=metric&appid=2ed920f2fae3fc09b3a8c000ccde583e`;
-        request(url, (error, response, body) => {
-            if (!error && response.statusCode === 200) {
-                const weather = JSON.parse(body);
-                const message = `В городе ${city.text} температура: ${weather.main.temp}°C, ${weather.weather[0].description}`;
-                bot.sendMessage(msg.chat.id, message);
-            } else {
-                bot.sendMessage(msg.chat.id, 'Не удалось получить информацию о погоде для данного города.');
-            }
-        });
+        const message = `В городе ${city.text} температура: ${getWeather(city.city)}°C`; // Получаем погоду и формируем сообщение
+        bot.sendMessage(msg.chat.id, message); // Отправляем сообщение с погодой
     } else {
         bot.sendMessage(msg.chat.id, 'Пожалуйста, выберите город из предложенных вариантов.');
         sendCityButtons(msg.chat.id);
     }
-    
-    // Обработчик кликов на кнопки с классом 'button'
-    document.querySelectorAll('.button').forEach(button => {
-        button.addEventListener('click', () => {
-            const cityName = button.getAttribute('data-city');
-            const url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=2ed920f2fae3fc09b3a8c000ccde583e`;
-            request(url, (error, response, body) => {
-                if (!error && response.statusCode === 200) {
-                    const weather = JSON.parse(body);
-                    const message = `В городе ${cityName} температура: ${weather.main.temp}°C, ${weather.weather[0].description}`;
-                    bot.sendMessage(chatId, message);
-                } else {
-                    bot.sendMessage(chatId, 'Не удалось получить информацию о погоде для данного города.');
-                }
-            });
-        });
-    });
 });
+
+// Функция для получения погоды
+function getWeather(city) {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2ed920f2fae3fc09b3a8c000ccde583e`;
+    request(url, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+            const weather = JSON.parse(body);
+            return weather.main.temp; // Возвращаем температуру
+        } else {
+            return 'не удалось получить информацию'; // Если возникла ошибка, возвращаем сообщение об ошибке
+        }
+    });
+}
+
