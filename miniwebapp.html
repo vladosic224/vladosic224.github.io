@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="miniwebapp.css">
+    <title>Города и погода</title>
+</head>
+<body>
+    <div class="container">
+        <div class="cont">
+            <div class="item" id="city1" data-city="Moscow">
+                <img src="1.png" alt="" class="img">
+                <p class="title_item">Moscow</p>
+                <button class="button" id="b1">current weather</button>
+            </div>
+            <div class="item" id="city2" data-city="Paris">
+                <img src="2.png" alt="" class="img">
+                <p class="title_item">Paris</p>
+                <button class="button" id="b2">current weather</button>
+            </div>
+            <div class="item" id="city3" data-city="London">
+                <img src="3.png" alt="" class="img">
+                <p class="title_item">London</p>
+                <button class="button" id="b3">current weather</button>
+            </div>
+            <div class="item" id="city4" data-city="New York">
+                <img src="4.png" alt="" class="img">
+                <p class="title_item">New York</p>
+                <button class="button" id="b4">current weather</button>
+            </div>
+            <div class="item" id="city5" data-city="Tokyo">
+                <img src="5.png" alt="" class="img">
+                <p class="title_item">Tokyo</p>
+                <button class="button" id="b5">current weather</button>
+            </div>
+            <div class="item" id="city6" data-city="Krasnodar">
+                <img src="6.png" alt="" class="img">
+                <p class="title_item">Krasnodar</p>
+                <button class="button" id="b6">current weather</button>
+            </div>
+        </div>
+    </div>
+    <div class="weather-display" id="weatherDisplay"></div>
+
+    <script>
+        const buttons = document.querySelectorAll('.button');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const city = button.getAttribute('data-city');
+                fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2ed920f2fae3fc09b3a8c000ccde583e`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const weatherDisplay = document.getElementById('weatherDisplay');
+                        weatherDisplay.innerHTML = `В городе ${city} температура: ${data.main.temp}°C, ${data.weather[0].description}`;
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при получении информации о погоде:', error);
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
