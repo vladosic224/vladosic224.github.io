@@ -23,12 +23,6 @@ function sendCityButtons(chatId) {
     };
     bot.sendMessage(chatId, 'Выберите город:', options);
 }
-
-// Обработчик команды /start
-bot.onText(/\/start/, (msg) => {
-    sendCityButtons(msg.chat.id);
-});
-
 // Обработчик нажатия на кнопку с названием города
 bot.on('message', (msg) => {
     const cityName = msg.text;
