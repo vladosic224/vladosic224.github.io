@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор марки машины</title>
+    <link rel="stylesheet" href="car.css">
+</head>
+<body>
+    <script>
+        if('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' });
+          navigator.serviceWorker.register('/firebase-messaging-sw.js', { scope: '/' });
+        }
+        </script>
+    <div class="wrapper">
+        <form class="car-form">
+            <h2>Выберите марку машины:</h2>
+            <div class="form-group">
+                <input type="radio" id="audi" name="car" value="audi">
+                <label for="audi">Audi</label>
+            </div>
+            <div class="form-group">
+                <input type="radio" id="bmw" name="car" value="bmw">
+                <label for="bmw">BMW</label>
+            </div>
+            <div class="form-group">
+                <input type="radio" id="mercedes" name="car" value="mercedes">
+                <label for="mercedes">Mercedes</label>
+            </div>
+            <div class="form-group">
+                <input type="radio" id="toyota" name="car" value="toyota">
+                <label for="toyota">Toyota</label>
+            </div>
+            <div class="form-group">
+                <input type="radio" id="volkswagen" name="car" value="volkswagen">
+                <label for="volkswagen">Volkswagen</label>
+            </div>
+            <button type="submit">Выбрать</button>
+        </form>
+        <script src="car.js"></script>
+    </div>
+</body>
+</html>
