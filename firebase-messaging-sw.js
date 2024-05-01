@@ -8,16 +8,18 @@ const firebaseConfig = {
     messagingSenderId: "465325740164",
     appId: "1:465325740164:web:06cc71e18fdc577ba2f2d1"
   };
-  
-  // Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const messaging = firebase.messaging();
-  
-  messaging.onBackgroundMessage(function(payload) {
 
+  firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+messaging.setBackgroundMessageHandler((payload)=>{
+    console.log('Получено уведомление:', payload);
+
+    const notificationTitle = payload.notification.title;
     const notificationOptions = {
-        body: payload.notification.body
+        body: payload.notification.body,
+        icon: payload.notification.icon ?? null
     };
 
-    self.registration.showNotification(payload.notification.title, notificationOptions);
+    return self.registration.showNotification(notificationTitle, notificationOptions);
 });
