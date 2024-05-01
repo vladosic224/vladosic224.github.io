@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="car.css">
 </head>
 <body>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-messaging.js"></script>
     <script>
         navigator?.serviceWorker.register('/firebase-messaging-sw.js', { scope: '/' })
       .then(() => {
