@@ -54,5 +54,28 @@ navigator?.serviceWorker.register('/sw.js', { scope: '/' })
         </form>
         <script src="car.js"></script>
     </div>
+    <script>
+       const firebaseConfig = {
+    apiKey: "AIzaSyA3F303snBflKIwbFrzlktbLjbmb5t4MRI",
+    authDomain: "project-70490792387777047.firebaseapp.com",
+    projectId: "project-70490792387777047",
+    storageBucket: "project-70490792387777047.appspot.com",
+    messagingSenderId: "465325740164",
+    appId: "1:465325740164:web:06cc71e18fdc577ba2f2d1"
+  };
+
+        firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+
+        // Запрос разрешения на отправку уведомлений
+        messaging.requestPermission()
+        .then(() => {
+            console.log("Разрешение на отправку уведомлений получено");
+        })
+        .catch((error) => {
+            console.error("Ошибка при запросе разрешения на отправку уведомлений:", error);
+        });
+
+    </script>
 </body>
 </html>
